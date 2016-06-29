@@ -38,7 +38,7 @@
 //usage:#define linux64_full_usage ""
 
 #include "libbb.h"
-#include <sys/personality.h>
+#include <linux/personality.h>
 
 #ifndef ADDR_NO_RANDOMIZE
 # define ADDR_NO_RANDOMIZE       0x0040000
