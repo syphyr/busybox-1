@@ -351,7 +351,10 @@ globtilde(const char *pattern, char *patbuf, size_t patbuf_len, glob_t *pglob)
 		 * the password file
 		 */
 #ifndef __GLIBC__
-		if (issetugid() != 0 ||
+		if (
+#    if __ANDROID_API__ < 21
+		    issetugid() != 0 ||
+#    endif
 		    (h = getenv("HOME")) == NULL) {
 			if (((h = getlogin()) != NULL &&
 			     (pwd = getpwnam(h)) != NULL) ||

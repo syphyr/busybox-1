@@ -59,11 +59,13 @@
 /*
  * This is from linux/include/net/ipv6.h
  */
+#  if !defined(__ANDROID__) || (defined(__ANDROID__) && __ANDROID_API__ < 21)
 struct in6_ifreq {
 	struct in6_addr ifr6_addr;
 	uint32_t ifr6_prefixlen;
 	unsigned int ifr6_ifindex;
 };
+#  endif
 # endif
 #endif /* HAVE_AFINET6 */
 

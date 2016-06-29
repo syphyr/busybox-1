@@ -79,13 +79,15 @@
 #endif
 
 #if ENABLE_FEATURE_IPV6
-#ifndef __BIONIC__
+# ifndef __BIONIC__
+#  if !defined(__ANDROID__) || (defined(__ANDROID__) && __ANDROID_API__ < 21)
 struct in6_ifreq {
 	struct in6_addr ifr6_addr;
 	uint32_t ifr6_prefixlen;
 	int ifr6_ifindex;
 };
-#endif
+#  endif
+# endif
 #endif
 
 /*
