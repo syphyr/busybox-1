@@ -370,7 +370,7 @@ typedef unsigned smalluint;
 #define HAVE_MKDTEMP 1
 #define HAVE_TTYNAME_R 1
 #define HAVE_PTSNAME_R 1
-#define HAVE_SETBIT 1
+//#define HAVE_SETBIT 1
 #define HAVE_SIGHANDLER_T 1
 #define HAVE_STPCPY 1
 #define HAVE_MEMPCPY 1
