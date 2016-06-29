@@ -1155,3 +1155,14 @@ int mdev_main(int argc UNUSED_PARAM, char **argv)
 
 	return EXIT_SUCCESS;
 }
+
+#include <errno.h>
+#include <signal.h>
+
+int
+sigtimedwait (const sigset_t *set, siginfo_t *info,
+		const struct timespec *timeout)
+{
+  __set_errno (ENOSYS);
+  return -1;
+}
