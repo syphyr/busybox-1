@@ -671,6 +671,23 @@ static void delete_block_backed_filesystems(void)
 void delete_block_backed_filesystems(void);
 #endif
 
+// Mark the given block device as read-write, using the BLKROSET ioctl.
+// https://github.com/CyanogenMod/android_system_core/blob/cm-12.1/toolbox/mount.c
+static void fs_set_blk_rw(const char *blockdev)
+{
+    int fd;
+    int OFF = 0;
+
+    fd = open(blockdev, O_RDONLY);
+    if (fd < 0) {
+        // should never happen
+        return;
+    }
+
+    ioctl(fd, BLKROSET, &OFF);
+    close(fd);
+}
+
 // Perform actual mount of specific filesystem at specific location.
 // NB: mp->xxx fields may be trashed on exit
 static int mount_it_now(struct mntent *mp, unsigned long vfsflags, char *filteropts)
@@ -686,6 +703,9 @@ static int mount_it_now(struct mntent *mp, unsigned long vfsflags, char *filtero
 				vfsflags, filteropts);
 		goto mtab;
 	}
+
+	if ((vfsflags & MS_RDONLY) == 0)
+		fs_set_blk_rw(mp->mnt_fsname);
 
 	// Mount, with fallback to read-only if necessary.
 	for (;;) {
